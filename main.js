@@ -66,9 +66,7 @@ define(function (require, exports, module) {
         var command     = "",
             text        = "",
             start       = 0,
-            end         = 0,
-            codemirror  = null,
-            i           = 0;
+            end         = 0;
         
         if ((event.type === "keydown") && (event.keyCode === KeyEvent.DOM_VK_TAB)) {
             command = _getCowsayCommand(editor);

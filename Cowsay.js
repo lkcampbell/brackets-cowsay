@@ -86,6 +86,7 @@ define(function (require, exports, module) {
         longestLine     = _getLongestLine(wrappedLines);
         
         // Top of the balloon
+        finalText += "\n";
         finalText += " " + _repeatChar("_", (longestLine.length + 2));
         finalText += "\n";
         
