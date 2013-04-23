@@ -116,12 +116,37 @@ define(function (require, exports, module) {
         
         return finalText;
     }
+
+    function _processCowText(cowText) {
+        var matchArr    = [],
+            finalText   = "";
+        
+        cowText     = cowText.replace(/\r\n?|[\n\u2028\u2029]/g, "\n").replace(/^\uFEFF/, '');
+        matchArr    = /\$the_cow\s*=\s*<<"*EOC"*;*\n([\s\S]+)\nEOC\n/.exec(cowText);
+        
+        if (!matchArr) {
+            // Need better Error handling here...
+            finalText = "Cannot parse cow file";
+        } else {
+            finalText = matchArr[1]
+                .replace(/\\{2}/g, "\\")
+                .replace(/\\@/g, "@")
+                .replace(/\\\$/g, "$")
+                .replace(/\$thoughts/g, "\\")
+                .replace(/\$eyes/g, "oo")
+                .replace(/\$tongue/g, "  ")
+                .replace(/\$\{eyes\}/g, "oo")
+                .replace(/\$\{tongue\}/g, "  ");
+        }
+        
+        return finalText;
+    }
     
     function _getCow() {
-        var finalText   = "";
+        var cowText     = require("text!cows/default.cow"),
+            finalText   = "";
             
-        finalText += require("text!cows/default.cow");
-        
+        finalText += _processCowText(cowText);
         finalText += "\n";
         
         return finalText;
