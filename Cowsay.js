@@ -40,19 +40,78 @@ define(function (require, exports, module) {
     var NativeApp = brackets.getModule("utils/NativeApp");
     
     // --- Constants ---
-    var DEFAULT_SHOW_HELP   = false;
-    
-    var HELP_URL = "https://github.com/lkcampbell/brackets-cowsay#how-to-use-cowsay";
-    
-    // --- Private variables
+    var DEFAULT_SHOW_HELP   = false,
+        HELP_URL            = "https://github.com/lkcampbell/brackets-cowsay#how-to-use-cowsay";
 
     // --- Utility Functions
-
-    // --- Cowsay helper functions
-    function _getBalloon(text) {
-        var finalText = "";
+    
+    function _repeatChar(char, count) {
+        var arr = [];
         
-        finalText += "**INSERT COW BALLOON HERE**";
+        arr.length = count + 1;
+        
+        return arr.join(char);
+    }
+    
+    // From http://james.padolsey.com/javascript/wordwrap-for-javascript/
+    function _wordwrap(str, width, brk, cut) {
+        brk = brk || "\n";
+        width = width || 75;
+        cut = cut || false;
+        
+        if (!str) { return str; }
+        
+        var regex = ".{1," + width + "}(\\s|$)" + (cut ? "|.{" + width + "}|.+$" : "|\\S+?(\\s|$)");
+        
+        return str.match(new RegExp(regex, "g")).join(brk);
+    }
+    
+    function _getLongestLine(arr) {
+        return arr.sort(function (a, b) { return b.length - a.length; })[0];
+    }
+    
+    function _padTextRight(text, length) {
+        return text + _repeatChar(" ", (length - text.length + 1));
+    }
+    
+    // --- Cowsay helper functions ---
+    function _getBalloon(text) {
+        var wrappedLines    = [],
+            longestLine     = "",
+            i               = 0,
+            currentLine     = "",
+            finalText       = "";
+        
+        wrappedLines    = _wordwrap(text, 80).split("\n");
+        longestLine     = _getLongestLine(wrappedLines);
+        
+        // Top of the balloon
+        finalText += " " + _repeatChar("_", (longestLine.length + 2));
+        finalText += "\n";
+        
+        // Middle of the balloon
+        if (wrappedLines.length === 1) {
+            finalText += "< " + wrappedLines[0] + " >";
+            finalText += "\n";
+        } else {
+            for (i = 0; i < wrappedLines.length; i++) {
+                currentLine = wrappedLines[i];
+                currentLine = _padTextRight(currentLine, longestLine.length);
+                
+                if (i === 0) {
+                    finalText += "/ " + currentLine + "\\";
+                } else if (i === wrappedLines.length - 1) {
+                    finalText += "\\ " + currentLine + "/";
+                } else {
+                    finalText += "| " + currentLine + "|";
+                }
+                
+                finalText += "\n";
+            }
+        }
+        
+        // Bottom of the balloon
+        finalText += " " + _repeatChar("-", (longestLine.length + 2));
         finalText += "\n";
         
         return finalText;
@@ -71,7 +130,6 @@ define(function (require, exports, module) {
     function parseCommand(command) {
         var i,
             commandArray    = command.split("_"),
-            cowText         = "",
             finalText       = "";
         
         // Command options
@@ -100,8 +158,7 @@ define(function (require, exports, module) {
             NativeApp.openURLInDefaultBrowser(HELP_URL);
             finalText = "";
         } else {
-            cowText = "MOO!!";
-            finalText += _getBalloon("cowText");
+            finalText += _getBalloon("MOO!!");
             finalText += _getCow();
         }
         
