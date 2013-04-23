@@ -31,20 +31,20 @@
  */
 
 /*jslint vars: true, plusplus: true, devel: true, regexp: true, nomen: true, indent: 4, maxerr: 50 */
-/*global define, brackets */
+/*global define, brackets, $*/
 
 define(function (require, exports, module) {
     "use strict";
     
     // --- Brackets Modules ---
-    var NativeApp = brackets.getModule("utils/NativeApp");
+    var ExtensionLoader = brackets.getModule("utils/ExtensionLoader"),
+        NativeApp       = brackets.getModule("utils/NativeApp");
     
     // --- Constants ---
     var DEFAULT_SHOW_HELP   = false,
         HELP_URL            = "https://github.com/lkcampbell/brackets-cowsay#how-to-use-cowsay";
 
     // --- Utility Functions
-    
     function _repeatChar(char, count) {
         var arr = [];
         
@@ -118,15 +118,26 @@ define(function (require, exports, module) {
     }
     
     function _getCow() {
-        var finalText = "";
+        var finalText   = "";
+            
+        finalText += require("text!cows/default.cow");
         
-        finalText += "**INSERT COW PICTURE HERE**";
         finalText += "\n";
         
         return finalText;
     }
 
     // -- Public methods
+    function drawCow(text, cow) {
+        var finalText = "";
+        
+        finalText += _getBalloon("MOO!!");
+        finalText += _getCow();
+        
+        return finalText;
+    }
+    
+    
     function parseCommand(command) {
         var i,
             commandArray    = command.split("_"),
@@ -158,13 +169,13 @@ define(function (require, exports, module) {
             NativeApp.openURLInDefaultBrowser(HELP_URL);
             finalText = "";
         } else {
-            finalText += _getBalloon("MOO!!");
-            finalText += _getCow();
+            finalText = drawCow();
         }
         
         return finalText;
     }
     
     // --- Public API ---
-    exports.parseCommand = parseCommand;
+    exports.drawCow         = drawCow;
+    exports.parseCommand    = parseCommand;
 });
