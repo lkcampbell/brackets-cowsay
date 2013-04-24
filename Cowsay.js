@@ -37,19 +37,21 @@ define(function (require, exports, module) {
     "use strict";
     
     // --- Brackets Modules ---
-    var ExtensionLoader = brackets.getModule("utils/ExtensionLoader"),
-        NativeApp       = brackets.getModule("utils/NativeApp");
+    var NativeApp   = brackets.getModule("utils/NativeApp"),
+        ModalBar    = brackets.getModule("widgets/ModalBar").ModalBar;
     
     // --- Constants ---
-    var DEFAULT_SHOW_HELP   = false,
-        HELP_URL            = "https://github.com/lkcampbell/brackets-cowsay#how-to-use-cowsay";
+    var DEFAULT_NEEDS_USER_TEXT     = true,
+        DEFAULT_COW_TEXT            = "MOOO-OOO!!!",
+        DEFAULT_COW_TYPE            = "default",
+        DEFAULT_SHOW_HELP           = false;
+
+    var HELP_URL = "https://github.com/lkcampbell/brackets-cowsay#how-to-use-cowsay";
 
     // --- Utility Functions
     function _repeatChar(char, count) {
         var arr = [];
-        
         arr.length = count + 1;
-        
         return arr.join(char);
     }
     
@@ -75,14 +77,14 @@ define(function (require, exports, module) {
     }
     
     // --- Cowsay helper functions ---
-    function _getBalloon(text) {
+    function _getBalloon(cowText) {
         var wrappedLines    = [],
             longestLine     = "",
             i               = 0,
             currentLine     = "",
             finalText       = "";
         
-        wrappedLines    = _wordwrap(text, 80).split("\n");
+        wrappedLines    = _wordwrap(cowText, 80).split("\n");
         longestLine     = _getLongestLine(wrappedLines);
         
         // Top of the balloon
@@ -118,12 +120,12 @@ define(function (require, exports, module) {
         return finalText;
     }
 
-    function _processCowText(cowText) {
+    function _processCowFile(cowFile) {
         var matchArr    = [],
             finalText   = "";
         
-        cowText     = cowText.replace(/\r\n?|[\n\u2028\u2029]/g, "\n").replace(/^\uFEFF/, '');
-        matchArr    = /\$the_cow\s*=\s*<<"*EOC"*;*\n([\s\S]+)\nEOC\n/.exec(cowText);
+        cowFile     = cowFile.replace(/\r\n?|[\n\u2028\u2029]/g, "\n").replace(/^\uFEFF/, '');
+        matchArr    = /\$the_cow\s*=\s*<<"*EOC"*;*\n([\s\S]+)\nEOC\n/.exec(cowFile);
         
         if (!matchArr) {
             // Need better Error handling here...
@@ -143,22 +145,27 @@ define(function (require, exports, module) {
         return finalText;
     }
     
-    function _getCow() {
-        var cowText     = require("text!cows/default.cow"),
+    function _getCow(cowType) {
+        var cowFileText = "",
             finalText   = "";
-            
-        finalText += _processCowText(cowText);
+        
+        // Temporary solution...
+        cowFileText = require("text!cows/default.cow");
+        
+        // TODO: need to load the .cow file based on cowType
+        
+        finalText += _processCowFile(cowFileText);
         finalText += "\n";
         
         return finalText;
     }
 
     // -- Public methods
-    function drawCow(text, cow) {
+    function drawCow(cowText, cowType) {
         var finalText = "";
         
-        finalText += _getBalloon("MOO!!");
-        finalText += _getCow();
+        finalText += _getBalloon(cowText);
+        finalText += _getCow(cowType);
         
         return finalText;
     }
@@ -170,7 +177,10 @@ define(function (require, exports, module) {
             finalText       = "";
         
         // Command options
-        var showHelp    = DEFAULT_SHOW_HELP;
+        var needsUserText   = DEFAULT_NEEDS_USER_TEXT,
+            cowText         = DEFAULT_COW_TEXT,
+            cowType         = DEFAULT_COW_TYPE,
+            showHelp        = DEFAULT_SHOW_HELP;
         
         // Parse the command string
         for (i = 1; i < commandArray.length; i++) {
@@ -195,7 +205,10 @@ define(function (require, exports, module) {
             NativeApp.openURLInDefaultBrowser(HELP_URL);
             finalText = "";
         } else {
-            finalText = drawCow();
+            if (needsUserText) {
+                console.log("Launch the modal dialog to get the user input.");
+            }
+            finalText = drawCow(cowText, cowType);
         }
         
         return finalText;
