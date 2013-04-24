@@ -46,8 +46,14 @@ define(function (require, exports, module) {
         DEFAULT_SHOW_HELP           = false;
 
     var HELP_URL = "https://github.com/lkcampbell/brackets-cowsay#how-to-use-cowsay";
+    
+    var FORTUNE_FILE_ARRAY  = require("text!fortunes.txt").split("%");
 
     // --- Utility Functions
+    function _getRandomElement(arr) {
+        return arr[Math.floor(Math.random() * arr.length)];
+    }
+    
     function _repeatChar(char, count) {
         var arr = [];
         arr.length = count + 1;
@@ -76,6 +82,21 @@ define(function (require, exports, module) {
     }
     
     // --- Cowsay helper functions ---
+    function _getRandomFortunes(count) {
+        var i           = 0,
+            fortune     = "",
+            finalText   = "";
+        
+        for (i = 0; i < count; i++) {
+            fortune   = _getRandomElement(FORTUNE_FILE_ARRAY);
+            finalText   += fortune.trim();
+            finalText   += "\n\n";
+        }
+        
+        finalText = finalText.trim();
+        return finalText;
+    }
+    
     function _getBalloon(cowText) {
         var wrappedLines    = [],
             longestLine     = "",
@@ -97,7 +118,7 @@ define(function (require, exports, module) {
             finalText += "\n";
         } else {
             for (i = 0; i < wrappedLines.length; i++) {
-                currentLine = wrappedLines[i];
+                currentLine = wrappedLines[i].trim();
                 currentLine = _padTextRight(currentLine, longestLine.length);
                 
                 if (i === 0) {
@@ -189,6 +210,9 @@ define(function (require, exports, module) {
             }
             
             switch (commandArray[i]) {
+            case "fortune":
+                needsUserText = false;
+                break;
             case "help":
             case "?":
                 showHelp = true;
@@ -206,6 +230,10 @@ define(function (require, exports, module) {
             if (needsUserText) {
                 // Temporary solution until I make the Modal Dialog
                 cowText = window.prompt("The cow says:", DEFAULT_COW_TEXT);
+            } else {
+                // Grab a random fortune to display
+                // TODO: Allow for multiple fortunes
+                cowText = _getRandomFortunes(1);
             }
             finalText = drawCow(cowText, cowType);
         }

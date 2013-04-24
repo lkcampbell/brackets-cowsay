@@ -29,6 +29,8 @@ underscore character in a row (e.g. `cowsay___help`) will insert an error messag
 into the document.
 
 ##### List of Current Options
+**_fortune:** Displays a cow saying a very profound and silly thing.
+
 **_?, _help:** Displays help for the Cowsay extension.  If this option is used,
 you will not be able to enter any text and no cow will be generated.  All other
 options will be ignored.
