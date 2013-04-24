@@ -31,14 +31,13 @@
  */
 
 /*jslint vars: true, plusplus: true, devel: true, regexp: true, nomen: true, indent: 4, maxerr: 50 */
-/*global define, brackets, $*/
+/*global define, brackets, $, window*/
 
 define(function (require, exports, module) {
     "use strict";
     
     // --- Brackets Modules ---
-    var NativeApp   = brackets.getModule("utils/NativeApp"),
-        ModalBar    = brackets.getModule("widgets/ModalBar").ModalBar;
+    var NativeApp   = brackets.getModule("utils/NativeApp");
     
     // --- Constants ---
     var DEFAULT_NEEDS_USER_TEXT     = true,
@@ -69,7 +68,7 @@ define(function (require, exports, module) {
     }
     
     function _getLongestLine(arr) {
-        return arr.sort(function (a, b) { return b.length - a.length; })[0];
+        return arr.slice(0).sort(function (a, b) { return b.length - a.length; })[0];
     }
     
     function _padTextRight(text, length) {
@@ -169,8 +168,7 @@ define(function (require, exports, module) {
         
         return finalText;
     }
-    
-    
+
     function parseCommand(command) {
         var i,
             commandArray    = command.split("_"),
@@ -206,7 +204,8 @@ define(function (require, exports, module) {
             finalText = "";
         } else {
             if (needsUserText) {
-                console.log("Launch the modal dialog to get the user input.");
+                // Temporary solution until I make the Modal Dialog
+                cowText = window.prompt("The cow says:", DEFAULT_COW_TEXT);
             }
             finalText = drawCow(cowText, cowType);
         }

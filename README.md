@@ -1,4 +1,13 @@
-# Cowsay for Brackets
+<pre>
+ _____________________
+&lt; Cowsay for Brackets &gt; 
+ ---------------------
+        \   ^__^
+         \  (oo)\_______
+            (__)\       )\/\
+                ||----w |
+                ||     ||
+</pre>
 An extension for [Brackets](https://github.com/adobe/brackets/) to generate
 a cow saying very profound and silly things.
 
@@ -8,7 +17,8 @@ a cow saying very profound and silly things.
 3. Click on the **Install** button.
 
 ### How to Use Cowsay
-Type `cowsay` and press the **Tab** key.
+Type `cowsay` and press the **Tab** key.  Enter your text into the dialog box
+and click OK.
 
 You can also add options to the `cowsay` command with an underscore character
 followed by the option name. For example: `cowsay_help`. Using an unrecognized
