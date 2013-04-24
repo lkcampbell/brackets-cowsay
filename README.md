@@ -8,8 +8,7 @@ a cow saying very profound and silly things.
 3. Click on the **Install** button.
 
 ### How to Use Cowsay
-Type `cowsay` and press the **Tab** key. When the popup text box appears, type in
-some text and press **Enter**.
+Type `cowsay` and press the **Tab** key.
 
 You can also add options to the `cowsay` command with an underscore character
 followed by the option name. For example: `cowsay_help`. Using an unrecognized
@@ -23,6 +22,10 @@ you will not be able to enter any text and no cow will be generated.  All other
 options will be ignored.
 
 ### Roadmap
+Add in modal UI for user to type in text for the cow to say
+
+Add word wrap option
+
 Option for cow to think instead of speak
 
 HTML option to wrap cow in `pre` tags
