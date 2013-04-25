@@ -23,12 +23,28 @@ Type `cowsay` and press the **Tab** key.  Enter your text into the dialog box
 and click OK.
 
 You can also add options to the `cowsay` command with an underscore character
-followed by the option name. For example: `cowsay_help`. Using an unrecognized
-option will insert an error message into the document.  Using more than one 
-underscore character in a row (e.g. `cowsay___help`) will insert an error message
-into the document.
+followed by the option name. For example: `cowsay_help`. Multiple options
+can also be chained together. For example, typing `cowsay_fortune_e@@_TVV` and
+then pressing the **Tab** key will give you a paranoid, vampiric cow saying
+a very profound and silly thing. Using an unrecognized option will insert an
+error message into the document.  Using more than one underscore character
+in a row (e.g. `cowsay_fortune__TU`) will insert an error message into the
+document.
 
 ##### List of Current Options
+**_e[text]:** Define how to draw the cow's eyes.  `[text]` can be zero, one, or
+two characters to represent the cow's eyes.  For example, `_e><` will draw the
+eyes shut tightly, `_eOo` will draw uneven eyes, `_e@` will draw a cyclops cow,
+and `_e` will draw a cow with no eyes at all.  All characters are valid except
+whitespace and the underscore.  If you want those characters you will have to
+tweak your cow by hand.
+
+**_T[text]:** Define how to draw the cow's tongue.  `[text]` can be zero, one, or
+two characters to represent the cow's tongue.  For example, `_TVV` will draw the
+a vampire cow, `_TW` is a cow with a forked tongue, and `_T` will draw a cow with
+no tongue at all.  All characters are valid except whitespace and the underscore.
+If you want those characters you will have to tweak your cow by hand.
+
 **_fortune:** Displays a cow saying a very profound and silly thing.
 
 **_?, _help:** Displays help for the Cowsay extension.  If this option is used,

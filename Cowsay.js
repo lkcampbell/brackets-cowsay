@@ -43,6 +43,8 @@ define(function (require, exports, module) {
     var DEFAULT_NEEDS_USER_TEXT     = true,
         DEFAULT_COW_TEXT            = "MOOO-OOO!!!",
         DEFAULT_COW_TYPE            = "default",
+        DEFAULT_EYES_STRING         = "oo",
+        DEFAULT_TONGUE_STRING       = "  ",
         DEFAULT_SHOW_HELP           = false;
 
     var HELP_URL = "https://github.com/lkcampbell/brackets-cowsay#how-to-use-cowsay";
@@ -78,7 +80,10 @@ define(function (require, exports, module) {
     }
     
     function _padTextRight(text, length) {
-        return text + _repeatChar(" ", (length - text.length + 1));
+        var arr = [];
+        
+        arr.length = (length - text.length) + 1;
+        return text + arr.join(" ");
     }
     
     // --- Cowsay helper functions ---
@@ -119,7 +124,7 @@ define(function (require, exports, module) {
         } else {
             for (i = 0; i < wrappedLines.length; i++) {
                 currentLine = wrappedLines[i].trim();
-                currentLine = _padTextRight(currentLine, longestLine.length);
+                currentLine = _padTextRight(currentLine, (longestLine.length + 1));
                 
                 if (i === 0) {
                     finalText += "/ " + currentLine + "\\";
@@ -140,7 +145,7 @@ define(function (require, exports, module) {
         return finalText;
     }
 
-    function _processCowFile(cowFile) {
+    function _processCowFile(cowFile, eyesString, tongueString) {
         var matchArr    = [],
             finalText   = "";
         
@@ -156,16 +161,16 @@ define(function (require, exports, module) {
                 .replace(/\\@/g, "@")
                 .replace(/\\\$/g, "$")
                 .replace(/\$thoughts/g, "\\")
-                .replace(/\$eyes/g, "oo")
-                .replace(/\$tongue/g, "  ")
-                .replace(/\$\{eyes\}/g, "oo")
-                .replace(/\$\{tongue\}/g, "  ");
+                .replace(/\$eyes/g, eyesString)
+                .replace(/\$tongue/g, tongueString)
+                .replace(/\$\{eyes\}/g, eyesString)
+                .replace(/\$\{tongue\}/g, tongueString);
         }
         
         return finalText;
     }
     
-    function _getCow(cowType) {
+    function _getCow(cowType, eyesString, tongueString) {
         var cowFileText = "",
             finalText   = "";
         
@@ -174,31 +179,28 @@ define(function (require, exports, module) {
         
         // TODO: need to load the .cow file based on cowType
         
-        finalText += _processCowFile(cowFileText);
+        finalText += _processCowFile(cowFileText, eyesString, tongueString);
         finalText += "\n";
         
         return finalText;
     }
 
     // -- Public methods
-    function drawCow(cowText, cowType) {
-        var finalText = "";
-        
-        finalText += _getBalloon(cowText);
-        finalText += _getCow(cowType);
-        
-        return finalText;
-    }
-
     function parseCommand(command) {
         var i,
             commandArray    = command.split("_"),
+            option          = "",
+            optionRegExp    = null,
+            optionResult    = [],
+            optionString    = "",
             finalText       = "";
         
         // Command options
         var needsUserText   = DEFAULT_NEEDS_USER_TEXT,
             cowText         = DEFAULT_COW_TEXT,
             cowType         = DEFAULT_COW_TYPE,
+            eyesString      = DEFAULT_EYES_STRING,
+            tongueString    = DEFAULT_TONGUE_STRING,
             showHelp        = DEFAULT_SHOW_HELP;
         
         // Parse the command string
@@ -209,7 +211,30 @@ define(function (require, exports, module) {
                 return "Error: Two or more underscore characters adjacent to each other.";
             }
             
-            switch (commandArray[i]) {
+            option          = "";
+            optionString    = "";
+            
+            // Eyes or tongue string, _e or _T, and a 0-2 character string in quotes
+            optionRegExp    = /^(e|T)(\S{0,2})$/;
+            
+            if (optionRegExp.test(commandArray[i])) {
+                optionResult    = commandArray[i].match(optionRegExp);
+                option          = optionResult[1];
+                optionString    = optionResult[2];
+            }
+            
+            // Otherwise, just a one part option
+            option = option || commandArray[i];
+            
+            switch (option) {
+            case "e":
+                eyesString = _padTextRight(optionString, 2);
+                console.log("eyesString = '" + eyesString + "'");
+                break;
+            case "T":
+                tongueString = _padTextRight(optionString, 2);
+                console.log("tongueString = '" + tongueString + "'");
+                break;
             case "fortune":
                 needsUserText = false;
                 break;
@@ -235,13 +260,14 @@ define(function (require, exports, module) {
                 // TODO: Allow for multiple fortunes
                 cowText = _getRandomFortunes(1);
             }
-            finalText = drawCow(cowText, cowType);
+            
+            finalText += _getBalloon(cowText);
+            finalText += _getCow(cowType, eyesString, tongueString);
         }
         
         return finalText;
     }
     
     // --- Public API ---
-    exports.drawCow         = drawCow;
     exports.parseCommand    = parseCommand;
 });
