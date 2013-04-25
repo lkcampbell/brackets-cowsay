@@ -218,7 +218,7 @@ define(function (require, exports, module) {
             option          = "";
             optionString    = "";
             
-            // Eyes or tongue string, _e or _T, and a 0-2 character string in quotes
+            // Eyes or tongue string, _e or _T, and a 0-2 character string
             optionRegExp    = /^(e|T)(\S{0,2})$/;
             
             if (optionRegExp.test(commandArray[i])) {
@@ -246,7 +246,7 @@ define(function (require, exports, module) {
                 tongueString    = "U ";
                 break;
             case "g":
-                eyesString      = "$$$$";
+                eyesString      = "$$";
                 tongueString    = "  ";
                 break;
             case "p":
