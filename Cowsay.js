@@ -156,6 +156,10 @@ define(function (require, exports, module) {
             // Need better Error handling here...
             finalText = "Cannot parse cow file";
         } else {
+            
+            // Hack for greedy eyes...problem with the regexp below?
+            eyesString = (eyesString === "$$") ? "$$$$" : eyesString;
+            
             finalText = matchArr[1]
                 .replace(/\\{2}/g, "\\")
                 .replace(/\\@/g, "@")
@@ -229,11 +233,41 @@ define(function (require, exports, module) {
             switch (option) {
             case "e":
                 eyesString = _padTextRight(optionString, 2);
-                console.log("eyesString = '" + eyesString + "'");
                 break;
             case "T":
                 tongueString = _padTextRight(optionString, 2);
-                console.log("tongueString = '" + tongueString + "'");
+                break;
+            case "b":
+                eyesString      = "==";
+                tongueString    = "  ";
+                break;
+            case "d":
+                eyesString      = "xx";
+                tongueString    = "U ";
+                break;
+            case "g":
+                eyesString      = "$$$$";
+                tongueString    = "  ";
+                break;
+            case "p":
+                eyesString      = "@@";
+                tongueString    = "  ";
+                break;
+            case "s":
+                eyesString      = "**";
+                tongueString    = "U ";
+                break;
+            case "t":
+                eyesString      = "--";
+                tongueString    = "  ";
+                break;
+            case "w":
+                eyesString      = "OO";
+                tongueString    = "  ";
+                break;
+            case "y":
+                eyesString      = "..";
+                tongueString    = "  ";
                 break;
             case "fortune":
                 needsUserText = false;

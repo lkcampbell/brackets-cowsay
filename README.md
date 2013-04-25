@@ -31,6 +31,12 @@ error message into the document.  Using more than one underscore character
 in a row (e.g. `cowsay_fortune__TU`) will insert an error message into the
 document.
 
+**Note:** Options to the far right of the chain always have the highest
+priority. If two options in the chain conflict with each other, the option
+on the right will have precedence. For example, the command `cowsay_p_t`
+will draw a tired cow and the command `cowsay_t_p` will draw a paranoid
+cow.
+
 ##### List of Current Options
 **_e[text]:** Define how to draw the cow's eyes.  `[text]` can be zero, one, or
 two characters to represent the cow's eyes.  For example, `_e><` will draw the
@@ -44,6 +50,22 @@ two characters to represent the cow's tongue.  For example, `_TVV` will draw the
 a vampire cow, `_TW` is a cow with a forked tongue, and `_T` will draw a cow with
 no tongue at all.  All characters are valid except whitespace and the underscore.
 If you want those characters you will have to tweak your cow by hand.
+
+**_b:** Draws a Borg cow.
+
+**_d:** Draws a dead cow.
+
+**_g:** Draws a greedy cow.
+
+**_p:** Draws a paranoid cow.
+
+**_s:** Draws a stoned cow.
+
+**_t:** Draws a tired cow.
+
+**_w:** Draws a wired cow.
+
+**_y:** Draws a young cow.
 
 **_fortune:** Displays a cow saying a very profound and silly thing.
 
