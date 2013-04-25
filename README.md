@@ -74,17 +74,13 @@ you will not be able to enter any text and no cow will be generated.  All other
 options will be ignored.
 
 ### Roadmap
-Add in modal UI for user to type in text for the cow to say
-
-Add word wrap option
-
-Option for cow to think instead of speak
-
-HTML option to wrap cow in `pre` tags
-
-Option to load different animals
-
-Option to load different files of things that the cow says
+* Add in modal UI for user to type in text for the cow to say
+* Make the installation restartless
+* Add word wrap option
+* Option for cow to think instead of speak
+* HTML option to wrap cow in `pre` tags
+* Option to load different animals
+* Option to load different files of things that the cow says
 
 ### License and Credits
 MIT-licensed -- see `main.js` for details.
