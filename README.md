@@ -82,8 +82,6 @@ Option for cow to think instead of speak
 
 HTML option to wrap cow in `pre` tags
 
-Options to change the cow's eyes and tongue
-
 Option to load different animals
 
 Option to load different files of things that the cow says
