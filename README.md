@@ -74,7 +74,7 @@ you will not be able to enter any text and no cow will be generated.  All other
 options will be ignored.
 
 ### Roadmap
-* Add in modal UI for user to type in text for the cow to say
+* Replace dialog box with _"" and _'' options
 * Make the installation restartless
 * Add word wrap option
 * Option for cow to think instead of speak
