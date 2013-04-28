@@ -45,6 +45,7 @@ define(function (require, exports, module) {
         DEFAULT_COW_TYPE            = "default",
         DEFAULT_EYES_STRING         = "oo",
         DEFAULT_TONGUE_STRING       = "  ",
+        DEFAULT_IS_THINKING         = false,
         DEFAULT_SHOW_HELP           = false;
 
     var HELP_URL = "https://github.com/lkcampbell/brackets-cowsay#how-to-use-cowsay";
@@ -102,12 +103,20 @@ define(function (require, exports, module) {
         return finalText;
     }
     
-    function _getBalloon(cowText) {
+    function _getBalloon(cowText, isThinking) {
         var wrappedLines    = [],
             longestLine     = "",
             i               = 0,
             currentLine     = "",
             finalText       = "";
+        
+        // Balloon corner characters
+        var upperLeftEdge   = "",
+            upperRightEdge  = "",
+            middleLeftEdge  = "",
+            middleRightEdge = "",
+            lowerLeftEdge   = "",
+            lowerRightEdge  = "";
         
         wrappedLines    = _wordwrap(cowText, 80).split("\n");
         longestLine     = _getLongestLine(wrappedLines);
@@ -119,7 +128,9 @@ define(function (require, exports, module) {
         
         // Middle of the balloon
         if (wrappedLines.length === 1) {
-            finalText += "< " + wrappedLines[0] + " >";
+            middleLeftEdge  = isThinking ? "( " : "< ";
+            middleRightEdge = isThinking ? " )" : " >";
+            finalText += middleLeftEdge + wrappedLines[0] + middleRightEdge;
             finalText += "\n";
         } else {
             for (i = 0; i < wrappedLines.length; i++) {
@@ -127,13 +138,18 @@ define(function (require, exports, module) {
                 currentLine = _padTextRight(currentLine, (longestLine.length + 1));
                 
                 if (i === 0) {
-                    finalText += "/ " + currentLine + "\\";
+                    upperLeftEdge   = isThinking ? "( " : "/ ";
+                    upperRightEdge  = isThinking ? ")" : "\\";
+                    finalText += upperLeftEdge + currentLine + upperRightEdge;
                 } else if (i === wrappedLines.length - 1) {
-                    finalText += "\\ " + currentLine + "/";
+                    lowerLeftEdge   = isThinking ? "( " : "\\ ";
+                    lowerRightEdge  = isThinking ? ")" : "/";
+                    finalText += lowerLeftEdge + currentLine + lowerRightEdge;
                 } else {
-                    finalText += "| " + currentLine + "|";
+                    middleLeftEdge  = isThinking ? "( " : "| ";
+                    middleRightEdge = isThinking ? ")" : "|";
+                    finalText += middleLeftEdge + currentLine + middleRightEdge;
                 }
-                
                 finalText += "\n";
             }
         }
@@ -145,7 +161,7 @@ define(function (require, exports, module) {
         return finalText;
     }
 
-    function _processCowFile(cowFile, eyesString, tongueString) {
+    function _processCowFile(cowFile, eyesString, tongueString, isThinking) {
         var matchArr    = [],
             finalText   = "";
         
@@ -164,7 +180,7 @@ define(function (require, exports, module) {
                 .replace(/\\{2}/g, "\\")
                 .replace(/\\@/g, "@")
                 .replace(/\\\$/g, "$")
-                .replace(/\$thoughts/g, "\\")
+                .replace(/\$thoughts/g, (isThinking ? "o" : "\\"))
                 .replace(/\$eyes/g, eyesString)
                 .replace(/\$tongue/g, tongueString)
                 .replace(/\$\{eyes\}/g, eyesString)
@@ -174,7 +190,7 @@ define(function (require, exports, module) {
         return finalText;
     }
     
-    function _getCow(cowType, eyesString, tongueString) {
+    function _getCow(cowType, eyesString, tongueString, isThinking) {
         var cowFileText = "",
             finalText   = "";
         
@@ -183,7 +199,7 @@ define(function (require, exports, module) {
         
         // TODO: need to load the .cow file based on cowType
         
-        finalText += _processCowFile(cowFileText, eyesString, tongueString);
+        finalText += _processCowFile(cowFileText, eyesString, tongueString, isThinking);
         finalText += "\n";
         
         return finalText;
@@ -205,6 +221,7 @@ define(function (require, exports, module) {
             cowType         = DEFAULT_COW_TYPE,
             eyesString      = DEFAULT_EYES_STRING,
             tongueString    = DEFAULT_TONGUE_STRING,
+            isThinking      = DEFAULT_IS_THINKING,
             showHelp        = DEFAULT_SHOW_HELP;
         
         // Parse the command string
@@ -269,6 +286,9 @@ define(function (require, exports, module) {
                 eyesString      = "..";
                 tongueString    = "  ";
                 break;
+            case "think":
+                isThinking = true;
+                break;
             case "fortune":
                 needsUserText = false;
                 break;
@@ -295,8 +315,8 @@ define(function (require, exports, module) {
                 cowText = _getRandomFortunes(1);
             }
             
-            finalText += _getBalloon(cowText);
-            finalText += _getCow(cowType, eyesString, tongueString);
+            finalText += _getBalloon(cowText, isThinking);
+            finalText += _getCow(cowType, eyesString, tongueString, isThinking);
         }
         
         return finalText;

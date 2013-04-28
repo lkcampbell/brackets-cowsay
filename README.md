@@ -67,6 +67,8 @@ If you want those characters you will have to tweak your cow by hand.
 
 **_y:** Draws a young cow.
 
+**_think:** Displays a cow thinking instead of speaking.
+
 **_fortune:** Displays a cow saying a very profound and silly thing.
 
 **_?, _help:** Displays help for the Cowsay extension.  If this option is used,
