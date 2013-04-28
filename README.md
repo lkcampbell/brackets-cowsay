@@ -78,10 +78,8 @@ options will be ignored.
 ### Roadmap
 * Make the installation restartless
 * Add word wrap option
-* Option for cow to think instead of speak
 * HTML option to wrap cow in `pre` tags
 * Option to load different animals
-* Option to load different files of things that the cow says
 
 ### License and Credits
 MIT-licensed -- see `main.js` for details.
