@@ -83,7 +83,6 @@ options will be ignored.
 ### Roadmap
 * Make the installation restartless
 * Add word wrap option
-* HTML option to wrap cow in `pre` tags
 * Option to load different animals
 
 ### License and Credits
