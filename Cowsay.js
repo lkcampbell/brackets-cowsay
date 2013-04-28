@@ -40,13 +40,14 @@ define(function (require, exports, module) {
     var NativeApp   = brackets.getModule("utils/NativeApp");
     
     // --- Constants ---
-    var DEFAULT_NEEDS_USER_TEXT     = true,
-        DEFAULT_COW_TEXT            = "MOOO-OOO!!!",
-        DEFAULT_COW_TYPE            = "default",
-        DEFAULT_EYES_STRING         = "oo",
-        DEFAULT_TONGUE_STRING       = "  ",
-        DEFAULT_IS_THINKING         = false,
-        DEFAULT_SHOW_HELP           = false;
+    var DEFAULT_NEEDS_USER_TEXT = true,
+        DEFAULT_COW_TEXT        = "MOOO-OOO!!!",
+        DEFAULT_COW_TYPE        = "default",
+        DEFAULT_EYES_STRING     = "oo",
+        DEFAULT_TONGUE_STRING   = "  ",
+        DEFAULT_IS_THINKING     = false,
+        DEFAULT_IS_HTML         = false,
+        DEFAULT_SHOW_HELP       = false;
 
     var HELP_URL = "https://github.com/lkcampbell/brackets-cowsay#how-to-use-cowsay";
     
@@ -222,6 +223,7 @@ define(function (require, exports, module) {
             eyesString      = DEFAULT_EYES_STRING,
             tongueString    = DEFAULT_TONGUE_STRING,
             isThinking      = DEFAULT_IS_THINKING,
+            isHTML          = DEFAULT_IS_HTML,
             showHelp        = DEFAULT_SHOW_HELP;
         
         // Parse the command string
@@ -292,6 +294,9 @@ define(function (require, exports, module) {
             case "fortune":
                 needsUserText = false;
                 break;
+            case "html":
+                isHTML = true;
+                break;
             case "help":
             case "?":
                 showHelp = true;
@@ -317,6 +322,10 @@ define(function (require, exports, module) {
             
             finalText += _getBalloon(cowText, isThinking);
             finalText += _getCow(cowType, eyesString, tongueString, isThinking);
+        }
+        
+        if (isHTML) {
+            finalText = "<pre>" + finalText + "</pre>";
         }
         
         return finalText;

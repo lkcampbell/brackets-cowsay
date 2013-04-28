@@ -71,6 +71,11 @@ If you want those characters you will have to tweak your cow by hand.
 
 **_fortune:** Displays a cow saying a very profound and silly thing.
 
+**_html:** Surrounds the cow in a pair of state-of-the-art, HTML5 compliant, Web Standards
+conformant `<pre> </pre>` tags. This prevents the browser from turning your cow into a pile
+of ASCII ground beef.
+
+
 **_?, _help:** Displays help for the Cowsay extension.  If this option is used,
 you will not be able to enter any text and no cow will be generated.  All other
 options will be ignored.
