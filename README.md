@@ -94,4 +94,4 @@ which was based off of the original Perl project by
 [Tony Monroe](http://www.nog.net/~tony/): [cowsay](https://github.com/schacon/cowsay)
 
 ### Compatibility
-Brackets Sprint 23 or later.
+Tested on Brackets Sprint 23 and later, Windows 7.
