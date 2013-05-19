@@ -1,0 +1,25 @@
+{
+    "name": "brackets-cowsay",
+    "title": "Cowsay",
+    "version": "1.0.0",
+    "description": "Generate a cow saying very profound and silly things.",
+    "homepage": "https://github.com/lkcampbell/brackets-cowsay",
+    "author": "Lance Campbell lkcampbell@gmail.com (https://github.com/lkcampbell)",
+    "license": "MIT",
+    "categories":"general",
+    "keywords": [
+        "cowsay",
+        "fun",
+        "games"
+    ],
+    "files": [
+        "cows"
+        "Cowsay.js",
+        "fortunes.txt",
+        "main.js",
+        "README.md"
+    ],
+    "engines": {
+        "brackets": ">=0.23.0"
+    }
+}
