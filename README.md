@@ -12,11 +12,10 @@ An extension for [Brackets](https://github.com/adobe/brackets/) to generate
 a cow saying very profound and silly things.
 
 ### How to Install
-1. Select **Brackets > File > Install Extension...**
-2. Paste https://github.com/lkcampbell/brackets-cowsay into Extension URL field.
-3. Click on the **Install** button.
-4. Reload or Restart Brackets -- normally not required but this extension
-needs it.
+1. Select **Brackets > File > Extension Manager...**
+2. Click on **Install from URL...**
+3. Paste https://github.com/lkcampbell/brackets-cowsay into Extension URL field.
+4. Click on the **Install** button.
 
 ### How to Use Cowsay
 Type `cowsay` and press the **Tab** key.  Enter your text into the dialog box
@@ -75,13 +74,11 @@ If you want those characters you will have to tweak your cow by hand.
 conformant `<pre> </pre>` tags. This prevents the browser from turning your cow into a pile
 of ASCII ground beef.
 
-
 **_?, _help:** Displays help for the Cowsay extension.  If this option is used,
 you will not be able to enter any text and no cow will be generated.  All other
 options will be ignored.
 
 ### Roadmap
-* Make the installation restartless
 * Add word wrap option
 * Option to load different animals
 
