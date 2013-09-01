@@ -13,9 +13,8 @@ a cow saying very profound and silly things.
 
 ### How to Install
 1. Select **Brackets > File > Extension Manager...**
-2. Click on **Install from URL...**
-3. Paste https://github.com/lkcampbell/brackets-cowsay into Extension URL field.
-4. Click on the **Install** button.
+2. Search for this extension.
+3. Click on the **Install** button.
 
 ### How to Use Cowsay
 Type `cowsay` and press the **Tab** key.  Enter your text into the dialog box
