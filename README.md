@@ -88,6 +88,3 @@ Based off of Fabio Crisci's [Cowsay Node Module](https://github.com/piuccio/cows
 
 which was based off of the original Perl project by
 [Tony Monroe](http://www.nog.net/~tony/): [cowsay](https://github.com/schacon/cowsay)
-
-### Compatibility
-Tested on Brackets Sprint 23 and later, Windows 7.
