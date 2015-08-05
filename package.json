@@ -1,7 +1,7 @@
 {
     "name": "brackets-cowsay",
     "title": "Cowsay",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Generate a cow saying very profound and silly things.",
     "homepage": "https://github.com/lkcampbell/brackets-cowsay",
     "author": "Lance Campbell (https://github.com/lkcampbell)",
