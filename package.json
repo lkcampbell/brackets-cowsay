@@ -10,7 +10,9 @@
     "keywords": [
         "cowsay",
         "fun",
-        "games"
+        "games",
+        "text",
+        "generator"
     ],
     "files": [
         "cows",
